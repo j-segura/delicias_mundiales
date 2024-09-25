@@ -1,15 +1,17 @@
 <template>
     <div class="grid grid-cols-4 h-screen">
-        <div class="bg-red-200">
-            Manu lateral
+        <div class="bg-escarcha-200">
+            <h3>MENÚ</h3>
             <ul>
-                <li>home</li>
-                <li>categorues</li>
-                <li>news</li>
+                <button><li>Platos</li></button>
+                <p>
+                <button><li>Categorías</li></button>
+                </p>
             </ul>
         </div>
-        <div class="bg-green-100 col-span-3">
-            <div class="bg-blue-300">
+
+        <div class="bg-white-400 col-span-3">
+            <div class="bg-white-300">
                 <slot name="alejo"/>
             </div>
             <slot/>
@@ -26,3 +28,4 @@
     @apply bg-slate-400 border-4;
 }
 </style>
+

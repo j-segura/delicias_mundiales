@@ -33,12 +33,12 @@ const cambiarEstadoDeMostrarAlgo = () => {
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Delicias mundiales" />
 
     <AuthenticatedLayout>
 
         <Ejemplo>
-            <template #alejo>COMIDAS DEL DIAS</template>
+            <template #alejo> </template>
             <p>platos favoritos</p>
             <button class="bg-yellow-300 cursor-pointer" @click.prevent="cambiarEstadoDeMostrarAlgo">mostrar algo</button>
             {{ mostraralgo }}
