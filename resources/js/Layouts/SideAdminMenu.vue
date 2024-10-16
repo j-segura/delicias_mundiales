@@ -28,4 +28,3 @@
     @apply bg-slate-400 border-4;
 }
 </style>
-

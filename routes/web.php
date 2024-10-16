@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,9 @@ Route::get('/dashboard', function () {
 Route::get('/contactanos', function () {
     return Inertia::render('Contactanos');
 })->middleware(['auth', 'verified'])->name('contactanos');
+
+/* Categories */
+Route::resource('admin/categories', CategoryController::class)->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -1,7 +1,6 @@
 <script setup>
 import Card from '@/Components/MisComponentes/Card.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import Ejemplo from '@/Layouts/Ejemplo.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
@@ -36,13 +35,11 @@ const cambiarEstadoDeMostrarAlgo = () => {
     <Head title="Delicias mundiales" />
 
     <AuthenticatedLayout>
-
-        <Ejemplo>
-            <template #alejo> </template>
+        <div class="p-8">
             <p>platos favoritos</p>
             <button class="bg-yellow-300 cursor-pointer" @click.prevent="cambiarEstadoDeMostrarAlgo">mostrar algo</button>
             {{ mostraralgo }}
-            <div class="grid grid-cols-4 gap-4 p-5">
+            <div class="grid grid-cols-6 gap-4 p-5">
                 <Card v-for="plato in platos"
                     :name="plato.nombre"
                     :description="plato.ingredites ? plato.ingredites[0].nombre : 'no tenemos ingredientes'"
@@ -50,7 +47,6 @@ const cambiarEstadoDeMostrarAlgo = () => {
             </div>
             <h1 v-if="mostraralgo">MAMA MIA</h1>
             <h1 v-else>PAPA MIA</h1>
-        </Ejemplo>
-
+        </div>
     </AuthenticatedLayout>
 </template>
