@@ -16,6 +16,23 @@ class DishController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function home()
+    {
+        try {
+
+            $dishes = Dish::orderBy('created_at', 'desc')->paginate(10);
+            $categories = Category::select('id', 'name')->get();
+            return Inertia::render('Dashboard', compact('dishes', 'categories'));
+
+        } catch (\Exception $ex) {
+
+            $message = 'Error en el método' . __METHOD__ . ' / ' . $ex;
+            Log::error($message);
+            return false;
+
+        }
+    }
+
     public function index()
     {
         try {
@@ -102,13 +119,9 @@ class DishController extends Controller
         try {
 
             $dish = Dish::with('categories:id,name', 'country:id,name')->where('id', $dish->id)->first();
-            $moreDishes = Dish::take(4)->get();
-            $authUser = auth()->user()->id;
 
-            return Inertia::render('Dishes/Show', [
-                'dishes' => $dish,
-                'moreDishes' => $moreDishes,
-                'authUser' => $authUser,
+            return Inertia::render('ShowDish', [
+                'dish' => $dish,
             ]);
 
         } catch (\Exception $ex) {

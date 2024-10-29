@@ -28,9 +28,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard',  [DishController::class, 'home'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/contactanos', function () {
     return Inertia::render('Contactanos');

@@ -1,37 +1,3 @@
-<script setup>
-import { Head } from '@inertiajs/vue3';
-import { ref } from 'vue';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import Card from '@/Components/MisComponentes/Card.vue';
-
-const categorias = ref([
-  'Italiana', 'Mexicana', 'China', 'Japonesa', 'India', 'Francesa'
-]);
-
-const platosDestacados = ref([
-  {
-    nombre: 'Plato Destacado 1',
-    descripcion: 'Descripción especial del plato destacado',
-    imagen: '/api/placeholder/300/200',
-    categoria: 'Italiana'
-  },
-  {
-    nombre: 'Plato Destacado 2',
-    descripcion: 'Una experiencia culinaria única',
-    imagen: '/api/placeholder/300/200',
-    categoria: 'Mexicana'
-  },
-  {
-    nombre: 'Plato Destacado 3',
-    descripcion: 'Sabores tradicionales reinventados',
-    imagen: '/api/placeholder/300/200',
-    categoria: 'China'
-  }
-]);
-
-const busqueda = ref('');
-</script>
-
 <template>
   <Head title="Delicias Mundiales" />
 
@@ -61,11 +27,11 @@ const busqueda = ref('');
         <h2 class="text-3xl font-bold mb-8 text-center">Explora por Categorías</h2>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           <div
-            v-for="categoria in categorias"
+            v-for="categoria in categories"
             :key="categoria"
             class="bg-white rounded-lg shadow-md p-4 text-center hover:shadow-lg transition-shadow cursor-pointer"
           >
-            <span class="font-medium">{{ categoria }}</span>
+            <span class="font-medium">{{ categoria.name }}</span>
           </div>
         </div>
       </div>
@@ -77,15 +43,14 @@ const busqueda = ref('');
         <h2 class="text-3xl font-bold mb-8 text-center">Platos Destacados</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <Card
-            v-for="plato in platosDestacados"
-            :key="plato.nombre"
-            :name="plato.nombre"
-            :description="plato.descripcion"
+            v-if="dishes"
+            v-for="dish in dishes.data"
+            :dish="dish"
             class="hover:shadow-xl transition-shadow"
           >
-            <img :src="plato.imagen" :alt="plato.nombre" class="w-full h-48 object-cover rounded-t-lg" />
           </Card>
         </div>
+        <Paginator :links="dishes.links"/>
       </div>
     </div>
 
@@ -110,3 +75,24 @@ const busqueda = ref('');
     </div>
   </AuthenticatedLayout>
 </template>
+
+<script setup>
+import { Head } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import Card from '@/Components/MisComponentes/Card.vue';
+import Paginator from '@/Components/Paginator.vue';
+
+const props = defineProps({
+    dishes: {
+        type: Object,
+        required: true,
+    },
+    categories: {
+        type: Object,
+        required: true,
+    },
+});
+
+const busqueda = ref('');
+</script>
