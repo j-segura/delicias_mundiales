@@ -2,8 +2,8 @@
     <AdminNav>
         <div class="p-7">
             <div class="w-full flex justify-between">
-                <h3 class="text-2xl font-medium">ACTUALIZAR CATEGORIA</h3>
-                <Link :href="route('categories.index')" class="px-5 py-2 bg-slate-200 text-gray-800 font-medium ">
+                <h3 class="text-2xl font-medium">ACTUALIZAR PAIS</h3>
+                <Link :href="route('countries.index')" class="px-5 py-2 bg-slate-200 text-gray-800 font-medium ">
                     <button>Regresar</button>
                 </Link>
             </div>
@@ -21,15 +21,10 @@
                     />
                     <InputError :message="form.errors.name" class="mt-2" />
                     </div>
-
-                    <div>
-                        <input type="file" id="image" name="image"
-                            @input="form.image = $event.target.files[0]"/>
-                    </div>
                 </div>
 
                 <div  class="mt-5">
-                    <button type="submit" class="px-5 py-2 bg-blue-200 text-blue-800 font-medium">ACTUALIZAR CATEGORIA</button>
+                    <button type="submit" class="px-5 py-2 bg-blue-200 text-blue-800 font-medium">ACTUALIZAR PAIS</button>
                 </div>
             </form>
         </div>
@@ -56,35 +51,31 @@ export default {
     },
 
     props: {
-        category: Object
+        country: Object
     },
 
     data() {
         return {
             form: useForm({
                 name: "",
-                image: null,
                 _method: 'put',
             })
         };
     },
 
     mounted() {
-        this.form.name = this.category.name;
+        this.form.name = this.country.name;
     },
 
     methods: {
         submit() {
-            this.form.post(route('categories.update', this.category), this.form, {
+            this.form.post(route('countries.update', this.country), this.form, {
                 preserveScroll: true,
                 forceFormData: true,
                 onSuccess: () => this.form.reset(),
                 onError: () => {
                     if (this.form.errors.name) {
                         this.form.reset('name');
-                    }
-                    if (this.form.errors.image) {
-                        this.form.reset('image');
                     }
                 },
             });

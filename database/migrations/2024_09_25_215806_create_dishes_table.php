@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('url_video');
             $table->text('ingredients');
             $table->text('step_by_step');
+            $table->string('image');
 
             $table->unsignedBigInteger('country_id');
 

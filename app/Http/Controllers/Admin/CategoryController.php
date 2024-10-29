@@ -20,7 +20,7 @@ class CategoryController extends Controller
     {
         try {
 
-            $categories = Category::orderBy('created_at', 'desc')->paginate(5);
+            $categories = Category::orderBy('created_at', 'desc')->paginate(10);
             return Inertia::render('Admin/Categories/Index', compact('categories'));
 
         } catch (\Exception $ex) {
@@ -46,7 +46,6 @@ class CategoryController extends Controller
     public function store(StoreRequest $request)
     {
         try {
-
             $data = $request->validated();
 
             if ($request->hasFile('image')) {
@@ -54,18 +53,19 @@ class CategoryController extends Controller
                 $data['image'] = asset('storage/' . $imagePath);
             }
 
-            $category = Category::create($data);
+            Category::create($data);
 
-            dd($category);
-
-            /* return redirect()->route('categories.index')->with('success', 'Category created successfully.'); */
+            return redirect()->route('categories.index');
 
         } catch (\Exception $ex) {
-
-            $message = 'Error en el método' . __METHOD__ . ' / ' . $ex;
+            $message = 'Error en el método ' . __METHOD__ . ' / ' . $ex->getMessage();
             Log::error($message);
-            return false;
 
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al crear la categoría',
+                'error' => $message
+            ], 500);
         }
     }
 

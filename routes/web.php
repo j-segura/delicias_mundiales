@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\DishController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +38,10 @@ Route::get('/contactanos', function () {
 
 /* Categories */
 Route::resource('admin/categories', CategoryController::class)->middleware(['auth', 'verified']);
+/* Countries */
+Route::resource('admin/countries', CountryController::class)->middleware(['auth', 'verified']);
+/* Dishes */
+Route::resource('admin/dishes', DishController::class)->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

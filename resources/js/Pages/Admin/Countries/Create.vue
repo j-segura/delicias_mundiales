@@ -2,8 +2,8 @@
     <AdminNav>
         <div class="p-7">
             <div class="w-full flex justify-between">
-                <h3 class="text-2xl font-medium">CREAR CATEGORIA</h3>
-                <Link :href="route('categories.index')" class="px-5 py-2 bg-slate-200 text-gray-800 font-medium ">
+                <h3 class="text-2xl font-medium">AÑADIR UN PAIS</h3>
+                <Link :href="route('countries.index')" class="px-5 py-2 bg-slate-200 text-gray-800 font-medium ">
                     <button class="basic-gray-btn">Regresar</button>
                 </Link>
             </div>
@@ -21,15 +21,10 @@
                     />
                     <InputError :message="form.errors.name" class="mt-2" />
                     </div>
-
-                    <div>
-                        <input type="file" id="image" name="image"
-                            @input="form.image = $event.target.files[0]"/>
-                    </div>
                 </div>
 
                 <div  class="mt-5">
-                    <button type="submit" class="px-5 py-2 bg-blue-200 text-blue-800 font-medium">CREAR CATEGORIA</button>
+                    <button type="submit" class="px-5 py-2 bg-blue-200 text-blue-800 font-medium">AGREGAR PAIS</button>
                 </div>
             </form>
         </div>
@@ -45,19 +40,15 @@ import TextInput from '@/Components/TextInput.vue';
 
 const form = useForm({
     name: '',
-    image: null,
 });
 
 const submit = () => {
-    form.post(route('categories.store'), {
+    form.post(route('countries.store'), {
     preserveScroll: true,
     onSuccess: () => form.reset(),
     onError: () => {
         if (form.errors.name) {
         form.reset('name');
-        }
-        if (form.errors.image) {
-        form.reset('image');
         }
     },
     });
