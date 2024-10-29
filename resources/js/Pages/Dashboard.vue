@@ -1,52 +1,112 @@
 <script setup>
-import Card from '@/Components/MisComponentes/Card.vue';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import Card from '@/Components/MisComponentes/Card.vue';
 
-const platos = [
-    {
-        nombre: 'Plato 1',
-        descripcion: 'esta es la dedcripcion numero 1',
-        ingredites: [
-            {
-                nombre: 'papita',
-            }
-        ]
-    },
-    {
-        nombre: 'Plato 2',
-        descripcion: 'easdfadsfadsadsf  1',
-    },
-    {
-        nombre: 'Plato 3',
-        descripcion: 'esta es la dedcripcion asdfadsfadsf 1',
-    },
-]
+const categorias = ref([
+  'Italiana', 'Mexicana', 'China', 'Japonesa', 'India', 'Francesa'
+]);
 
-const mostraralgo = ref(true);
+const platosDestacados = ref([
+  {
+    nombre: 'Plato Destacado 1',
+    descripcion: 'Descripción especial del plato destacado',
+    imagen: '/api/placeholder/300/200',
+    categoria: 'Italiana'
+  },
+  {
+    nombre: 'Plato Destacado 2',
+    descripcion: 'Una experiencia culinaria única',
+    imagen: '/api/placeholder/300/200',
+    categoria: 'Mexicana'
+  },
+  {
+    nombre: 'Plato Destacado 3',
+    descripcion: 'Sabores tradicionales reinventados',
+    imagen: '/api/placeholder/300/200',
+    categoria: 'China'
+  }
+]);
 
-const cambiarEstadoDeMostrarAlgo = () => {
-    mostraralgo.value = !mostraralgo.value
-}
+const busqueda = ref('');
 </script>
 
 <template>
-    <Head title="Delicias mundiales" />
+  <Head title="Delicias Mundiales" />
 
-    <AuthenticatedLayout>
-        <div class="p-8">
-            <p>platos favoritos</p>
-            <button class="bg-yellow-300 cursor-pointer" @click.prevent="cambiarEstadoDeMostrarAlgo">mostrar algo</button>
-            {{ mostraralgo }}
-            <div class="grid grid-cols-6 gap-4 p-5">
-                <Card v-for="plato in platos"
-                    :name="plato.nombre"
-                    :description="plato.ingredites ? plato.ingredites[0].nombre : 'no tenemos ingredientes'"
-                />
-            </div>
-            <h1 v-if="mostraralgo">MAMA MIA</h1>
-            <h1 v-else>PAPA MIA</h1>
+  <AuthenticatedLayout>
+    <!-- Hero Section -->
+    <div class="relative h-96 bg-gradient-to-r from-orange-500 to-red-600">
+      <div class="absolute inset-0 bg-black opacity-50"></div>
+      <div class="relative z-10 flex flex-col items-center justify-center h-full text-white px-4">
+        <h1 class="text-5xl font-bold mb-4">Delicias Mundiales</h1>
+        <p class="text-xl mb-8 text-center">Descubre los sabores más exquisitos de la cocina internacional</p>
+
+        <!-- Barra de búsqueda -->
+        <div class="relative w-full max-w-2xl">
+          <input
+            v-model="busqueda"
+            type="text"
+            placeholder="Buscar platos, ingredientes o cocinas..."
+            class="w-full px-6 py-3 rounded-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-500"
+          />
         </div>
-    </AuthenticatedLayout>
+      </div>
+    </div>
+
+    <!-- Categorías -->
+    <div class="py-12 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl font-bold mb-8 text-center">Explora por Categorías</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div
+            v-for="categoria in categorias"
+            :key="categoria"
+            class="bg-white rounded-lg shadow-md p-4 text-center hover:shadow-lg transition-shadow cursor-pointer"
+          >
+            <span class="font-medium">{{ categoria }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Platos Destacados -->
+    <div class="py-12">
+      <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl font-bold mb-8 text-center">Platos Destacados</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <Card
+            v-for="plato in platosDestacados"
+            :key="plato.nombre"
+            :name="plato.nombre"
+            :description="plato.descripcion"
+            class="hover:shadow-xl transition-shadow"
+          >
+            <img :src="plato.imagen" :alt="plato.nombre" class="w-full h-48 object-cover rounded-t-lg" />
+          </Card>
+        </div>
+      </div>
+    </div>
+
+    <!-- Características -->
+    <div class="py-12 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="text-center">
+            <h3 class="text-xl font-bold mb-2">Cocina Internacional</h3>
+            <p class="text-gray-600">Explora platos de todo el mundo</p>
+          </div>
+          <div class="text-center">
+            <h3 class="text-xl font-bold mb-2">Chefs Expertos</h3>
+            <p class="text-gray-600">Recetas elaboradas por profesionales</p>
+          </div>
+          <div class="text-center">
+            <h3 class="text-xl font-bold mb-2">Búsqueda Fácil</h3>
+            <p class="text-gray-600">Encuentra tus platos favoritos</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </AuthenticatedLayout>
 </template>
